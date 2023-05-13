@@ -1,12 +1,9 @@
 import React from "react";
-import "./index.css";
+
+import MovieLayout from "./layouts/SearchMovies";
 
 function App() {
-  return (
-    <div className="bg-gray-200 h-screen flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-gray-800">Hello, Tailwind CSS!</h1>
-    </div>
-  );
+  return <MovieLayout />;
 }
 
 export default App;
