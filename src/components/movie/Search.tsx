@@ -7,6 +7,7 @@ const Search = () => {
   return (
     <>
       <FontAwesomeIcon
+        data-testid="search-icon"
         icon={faMagnifyingGlass}
         className="absolute p-2 w-4 h-4 text-slate-500"
       />
