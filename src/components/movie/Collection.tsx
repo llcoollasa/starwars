@@ -11,15 +11,15 @@ export interface Movie {
 
 const Collection = () => {
   const { isLoading, error, data } = useQuery(["movieData"], getMovies);
-
+  
   if (isLoading) return <div>Loading...</div>;
-
+  
   if (error) return <div>Something went wrong!</div>;
-
+  
   return (
     <>
       {data?.results?.map((movie: Movie) => (
-        <div id={movie.episode_id.toString()} className="flex">
+        <div key={movie.episode_id.toString()} id={movie.episode_id.toString()} className="flex">
           <div>{`EPISODE ${movie.episode_id}`}</div>
           <div>{`EPISODE ${movie.episode_id} ${movie.title}`}</div>
         </div>

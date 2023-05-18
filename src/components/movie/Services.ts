@@ -10,5 +10,6 @@ interface Result {
  
 export const getMovies = async () : Promise<Result> => {
   const response = await axios.get("https://swapi.dev/api/films/?format=json");
+console.log(response.data)
   return response.data;
 };
