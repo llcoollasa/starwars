@@ -1,15 +1,13 @@
-import Collection from "../Collection";
-import { getMovies } from "../Services";
-import { renderWithQueryClient } from "./helpers/utils";
-import { mockMoviesData } from "./helpers/mockData";
-import axios from "axios";
-jest.mock("axios");
+import List from "./List";
+import { getMovies } from "../../views/Services";
+import { renderWithQueryClient } from "../../helpers/utils";
+import { mockMoviesData } from "../../helpers/mockData";
 
-jest.mock("../Services", () => ({
+jest.mock("./Services", () => ({
   getMovies: jest.fn(),
 }));
 
-describe("Collection", () => {
+describe("List", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -18,7 +16,7 @@ describe("Collection", () => {
     const mockedGetMovies = getMovies as jest.Mock;
     mockedGetMovies.mockResolvedValue(mockMoviesData);
 
-    const { findByText } = renderWithQueryClient(<Collection />);
+    const { findByText } = renderWithQueryClient(<List movies={[]} />);
 
     expect(await findByText(/Mock Movie 1/i)).toBeInTheDocument();
     expect(await findByText(/Mock Movie 2/i)).toBeInTheDocument();
@@ -28,7 +26,7 @@ describe("Collection", () => {
     const mockedGetMovies = getMovies as jest.Mock;
     mockedGetMovies.mockResolvedValue(mockMoviesData);
 
-    const { getByText } = renderWithQueryClient(<Collection />);
+    const { getByText } = renderWithQueryClient(<List  movies={[]}/>);
 
     expect(await getByText("Loading...")).toBeInTheDocument();
   });

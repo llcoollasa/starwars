@@ -1,9 +1,12 @@
 import React from "react";
+import { useMovieViewContext } from "../../context/MovieViewContext";
 
 const MoviePreview = () => {
+  const { name } = useMovieViewContext();
+
   return (
     <>
-      <div>Episodes III- Revenge of the Sith</div>
+      <div data-testid="movie-title">Episodes III- Revenge of the Sith</div>
       <div>
         <div>
           <img src="#" alt="My Image" />
@@ -21,6 +24,7 @@ const MoviePreview = () => {
       <div>Directed by: Some Name</div>
       <div>Average Rating: ******</div>
       <div>Internet Movie DB 78%</div>
+      <div>{name}</div>
     </>
   );
 };

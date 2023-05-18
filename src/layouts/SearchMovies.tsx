@@ -1,24 +1,29 @@
 import React from "react";
 
-import Search from "../components/movie/Search";
-import MoviePreview from "../components/movie/Details";
-import Collection from "../components/movie/Collection";
+interface MovieViewLayoutProps {
+  searchComponent: React.ReactNode;
+  listComponent: React.ReactNode;
+  detailViewComponent: React.ReactNode;
+}
 
-const SearchMovies = () => {
+const MovieViewLayout: React.FC<MovieViewLayoutProps> = ({
+  searchComponent,
+  listComponent,
+  detailViewComponent,
+}) => {
   return (
     <>
-      <Search />
-
+      {searchComponent}
       <div className="grid grid-cols-2">
         <div className="bg-gray-300 col-span-2 xs:col-span-1 p-2">
-          <Collection />
+          {listComponent}
         </div>
         <div className="bg-red-500 col-span-2 xs:col-span-1 p-2 border-l border-slate-600">
-          <MoviePreview />
+          {detailViewComponent}
         </div>
       </div>
     </>
   );
 };
 
-export default SearchMovies;
+export default MovieViewLayout;
