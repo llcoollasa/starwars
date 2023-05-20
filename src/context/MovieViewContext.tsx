@@ -6,9 +6,16 @@ import React, {
   useState,
 } from "react";
 
-interface MovieViewContextData {
-  name: string;
-  setName: Dispatch<SetStateAction<string>>;
+type Movie = {
+  title: string;
+  episode_id: number;
+  director: string;
+  opening_crawl: string;
+};
+
+export interface MovieViewContextData {
+  movie: Movie | null;
+  setMovie: Dispatch<SetStateAction<Movie | null>>;
 }
 
 interface MovieViewContextProviderProps {
@@ -16,8 +23,8 @@ interface MovieViewContextProviderProps {
 }
 
 const initialMovieContextData: MovieViewContextData = {
-  name: "",
-  setName: () => null,
+  movie: null,
+  setMovie: () => null,
 };
 
 const ContextForMovieView = createContext<MovieViewContextData>(
@@ -29,10 +36,10 @@ export const useMovieViewContext = () => useContext(ContextForMovieView);
 const MovieViewContextProvider: React.FC<MovieViewContextProviderProps> = ({
   children,
 }) => {
-  const [name, setName] = useState<string>("");
+  const [movie, setMovie] = useState<Movie | null>(null);
 
   return (
-    <ContextForMovieView.Provider value={{ name, setName }}>
+    <ContextForMovieView.Provider value={{ movie, setMovie }}>
       {children}
     </ContextForMovieView.Provider>
   );

@@ -3,6 +3,7 @@ import MovieView from "./MovieView";
 import { getMovies } from "./Services";
 import { mockMoviesData } from "../helpers/mockData";
 import { renderWithQueryClient } from "../helpers/utils";
+import { screen } from "@testing-library/react";
 
 jest.mock("./Services", () => ({
   getMovies: jest.fn(),
@@ -19,18 +20,18 @@ describe("Movie View", () => {
       results: mockMoviesData,
     });
 
-    const { findByText } = renderWithQueryClient(<MovieView />);
+    renderWithQueryClient(<MovieView />);
 
-    expect(await findByText(/Mock Movie 1/i)).toBeInTheDocument();
-    expect(await findByText(/Mock Movie 2/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Mock Movie 1/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Mock Movie 2/i)).toBeInTheDocument();
   });
 
-  it("should display loading while fetching data", async () => {
+  it("should display loading while fetching data", () => {
     const mockedGetMovies = getMovies as jest.Mock;
     mockedGetMovies.mockResolvedValue(mockMoviesData);
 
-    const { getByText } = renderWithQueryClient(<MovieView />);
+    renderWithQueryClient(<MovieView />);
 
-    expect(await getByText("Loading...")).toBeInTheDocument();
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 });

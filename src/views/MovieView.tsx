@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import Search from "../components/movie/Search";
 import MoviePreview from "../components/movie/Preview";
-import MoviesList, { Movie } from "../components/movie/List";
+import MoviesList from "../components/movie/List";
 import SearchMoviesLayout from "../layouts/SearchMovies";
 import MovieViewContext from "../context/MovieViewContext";
 import { getMovies } from "./Services";
