@@ -1,11 +1,25 @@
-# Heading 1
+# Starwars Movie Database
 
-Description
+Starwars movies collection searching application developed using React.
 
-## Heading 2
+[View Online Demo](https://starwars-eight-zeta.vercel.app/)
 
-Heading 2 description
+### Designing Highlights
+ 
+- Used react context to handle application state
+- React testing library to run tests
 
-### Heading 3
+### Manual Configuration
 
-Heading 3 description
+I have used Node version 17.9.0
+
+```
+npm i
+npm start 
+```
+
+#### Tests
+
+```
+npm run test
+```

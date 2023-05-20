@@ -1,30 +1,25 @@
 import List from "./List";
 import { renderWithQueryClient } from "../../helpers/utils";
 import { mockMoviesData } from "../../helpers/mockData";
+import { screen } from "@testing-library/react";
 
 describe("List", () => {
   it("should render movie list", async () => {
-    const { findByText } = renderWithQueryClient(
-      <List movies={mockMoviesData} />
-    );
+    renderWithQueryClient(<List movies={mockMoviesData} />);
 
-    expect(await findByText(/Mock Movie 1/i)).toBeInTheDocument();
-    expect(await findByText(/Mock Movie 2/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Mock Movie 1/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Mock Movie 2/i)).toBeInTheDocument();
   });
 
   it("should display loading message", async () => {
-    const { getByText } = renderWithQueryClient(
-      <List movies={mockMoviesData} isLoading={true} />
-    );
+    renderWithQueryClient(<List movies={mockMoviesData} isLoading={true} />);
 
-    expect(await getByText("Loading...")).toBeInTheDocument();
+    expect(await screen.findByText("Loading...")).toBeInTheDocument();
   });
 
   it("should display no data message", async () => {
-    const { getByText } = renderWithQueryClient(
-      <List movies={[]} />
-    );
+    renderWithQueryClient(<List movies={[]} />);
 
-    expect(await getByText("No Data!")).toBeInTheDocument();
+    expect(await screen.findByText("No Data!")).toBeInTheDocument();
   });
 });

@@ -2,29 +2,21 @@ import React from "react";
 import { useMovieViewContext } from "../../context/MovieViewContext";
 
 const MoviePreview = () => {
-  const { name } = useMovieViewContext();
+  const { movie } = useMovieViewContext();
+
+  if (!movie) {
+    return (
+      <div>
+        <h2 data-testid="movie-default">Select an item from the movie list.</h2>
+      </div>
+    );
+  }
 
   return (
     <>
-      <div data-testid="movie-title">Episodes III- Revenge of the Sith</div>
-      <div>
-        <div>
-          <img src="#" alt="My Image" />
-        </div>
-        <div>
-          War! The Republic is crumbling under attacks by the ruthless Sith
-          Lord, Count Dooku. There are heroes on both sides. Evil is everywhere.
-          In a stunning move, the fiendish droid leader, General Grievous, has
-          swept into the Republic capital and kidnapped Chancellor Palpatine,
-          leader of the Galactic Senate. As the Separatist Droid Army attempts
-          to flee the besieged capital with their valuable hostage, two Jedi
-          Knights lead a desperate mission to rescue the captive Chancellor....
-        </div>
-      </div>
-      <div>Directed by: Some Name</div>
-      <div>Average Rating: ******</div>
-      <div>Internet Movie DB 78%</div>
-      <div>{name}</div>
+      <div data-testid="movie-title"><h2>{movie.title}</h2></div>
+      <div data-testid="movie-opening-crawl">{movie.opening_crawl}</div>
+      <div data-testid="movie-director">Directed by: {movie.director}</div>
     </>
   );
 };
