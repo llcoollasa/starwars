@@ -16,6 +16,8 @@ type Movie = {
 export interface MovieViewContextData {
   movie: Movie | null;
   setMovie: Dispatch<SetStateAction<Movie | null>>;
+  movieTitle: string | null;
+  setMovieTitle: Dispatch<SetStateAction<string | null>>;
 }
 
 interface MovieViewContextProviderProps {
@@ -25,9 +27,11 @@ interface MovieViewContextProviderProps {
 const initialMovieContextData: MovieViewContextData = {
   movie: null,
   setMovie: () => null,
+  movieTitle: null,
+  setMovieTitle: () => null,
 };
 
-const ContextForMovieView = createContext<MovieViewContextData>(
+export const ContextForMovieView = createContext<MovieViewContextData>(
   initialMovieContextData
 );
 
@@ -37,9 +41,12 @@ const MovieViewContextProvider: React.FC<MovieViewContextProviderProps> = ({
   children,
 }) => {
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [movieTitle, setMovieTitle] = useState<string | null>(null);
 
   return (
-    <ContextForMovieView.Provider value={{ movie, setMovie }}>
+    <ContextForMovieView.Provider
+      value={{ movie, setMovie, movieTitle, setMovieTitle }}
+    >
       {children}
     </ContextForMovieView.Provider>
   );
