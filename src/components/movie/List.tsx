@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMovieViewContext } from "../../context/MovieViewContext";
-import { getMovieTitle } from "./helper";
+import Loading from "../shared/Loading";
 
 export interface Movie {
   episode_id: number;
@@ -37,7 +37,7 @@ const Collection: React.FC<CollectionProps> = ({ movies, isLoading }) => {
     setSelectedMovieId(null);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   if (!movies.length) return <div>No Data!</div>;
 
@@ -47,6 +47,7 @@ const Collection: React.FC<CollectionProps> = ({ movies, isLoading }) => {
         <tbody>
           {movies.map((movie) => (
             <tr
+              data-testid={`list-item-${movie.episode_id}`}
               key={movie.episode_id.toString()}
               className={`border-b cursor-pointer ${
                 selectedMovieId === movie.episode_id
@@ -58,9 +59,7 @@ const Collection: React.FC<CollectionProps> = ({ movies, isLoading }) => {
               }}
             >
               <td className="py-2 text-sm">{`EPISODE ${movie.episode_id}`}</td>
-              <td className="py-2 font-semibold">
-                {getMovieTitle(movie.episode_id, movie.title)}
-              </td>
+              <td className="py-2 font-semibold">{movie.title}</td>
               <td className="py-2 text-right pr-2">{movie.release_date}</td>
             </tr>
           ))}

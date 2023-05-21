@@ -3,22 +3,26 @@ import Search from "../components/movie/Search";
 import MoviePreview from "../components/movie/Preview";
 import MoviesList from "../components/movie/List";
 import SearchMoviesLayout from "../layouts/SearchMovies";
-import MovieViewContext from "../context/MovieViewContext";
-import { getMovies } from "./Services";
+import { useMovieViewContext } from "../context/MovieViewContext";
+import { filterMoviesByTitle, getUpdatedMovies } from "./Services";
 
 const MovieView = () => {
-  const { isLoading, data } = useQuery(["movieData"], getMovies);
+  const { isLoading, data: movies } = useQuery(["movieData"], getUpdatedMovies);
+  const { movieTitle } = useMovieViewContext();
+
+  const filteredMovies =
+    movieTitle && movies ? filterMoviesByTitle(movies, movieTitle) : movies;
 
   return (
-    <MovieViewContext>
+    <>
       <SearchMoviesLayout
         searchComponent={<Search />}
         listComponent={
-          <MoviesList movies={data?.results || []} isLoading={isLoading} />
+          <MoviesList movies={filteredMovies || []} isLoading={isLoading} />
         }
         detailViewComponent={<MoviePreview />}
       />
-    </MovieViewContext>
+    </>
   );
 };
 
