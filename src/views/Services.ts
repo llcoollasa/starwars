@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Movie } from "../components/movie/List";
 import { getMovieTitle } from "../components/movie/helper";
+import { SortOrder } from "../components/movie/Sorting";
 
 const API_URL = process.env.REACT_APP_STAR_WARS_API as string;
 
@@ -38,6 +39,25 @@ export const filterMoviesByTitle = (
     const { title } = movie;
     return title.toLowerCase().includes(lowercasedTitle);
   });
+
+  return filteredCollection;
+};
+
+enum Foo {
+  "EPISODE" = "title",
+  "YEAR" = "release_date",
+}
+
+export const sortBy = (
+  moviesCollection: Movie[],
+  sortOption: "EPISODE" | "YEAR",
+  sortOrder: SortOrder
+): Movie[] => {
+  const filteredCollection = moviesCollection.sort((a, b) =>
+    sortOrder === "ASCENDING"
+      ? a[Foo[sortOption]].localeCompare(b[Foo[sortOption]])
+      : b[Foo[sortOption]].localeCompare(a[Foo[sortOption]])
+  );
 
   return filteredCollection;
 };
