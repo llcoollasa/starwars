@@ -97,4 +97,58 @@ describe("Movie View", () => {
       await screen.findByText(/Episode II - Mock Movie 2/i)
     ).toBeInTheDocument();
   });
+
+  it("should sort movies by episode descending order", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MovieViewContextProvider>
+          <MovieView />
+        </MovieViewContextProvider>
+      </QueryClientProvider>
+    );
+
+    expect(
+      await screen.findByText(/Episode II - Mock Movie 2/i)
+    ).toBeInTheDocument();
+
+    const selectElement = screen.getByRole("combobox");
+    fireEvent.change(selectElement, { target: { value: "EPISODE" } });
+
+    const descendingRadio = screen.getByLabelText("Descending");
+    fireEvent.click(descendingRadio);
+
+    const listItems = screen.getAllByTestId(/list-item-episode-/i);
+    expect(listItems.length).toBe(2) 
+    expect(listItems[0].textContent).toBe("EPISODE 2") 
+    expect(listItems[1].textContent).toBe("EPISODE 1") 
+  });
+
+  it("should sort movies by year descending order", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MovieViewContextProvider>
+          <MovieView />
+        </MovieViewContextProvider>
+      </QueryClientProvider>
+    );
+
+    expect(
+      await screen.findByText(/Episode II - Mock Movie 2/i)
+    ).toBeInTheDocument();
+
+    const selectElement = screen.getByRole("combobox");
+    fireEvent.change(selectElement, { target: { value: "YEAR" } });
+
+    const descendingRadio = screen.getByLabelText("Descending");
+    fireEvent.click(descendingRadio);
+
+    expect(
+      await screen.findByText(/Episode II - Mock Movie 2/i)
+    ).toBeInTheDocument();
+    
+    const listItems = screen.getAllByTestId(/list-item-release-date/i);
+    expect(listItems.length).toBe(2) 
+    expect(listItems[0].textContent).toBe("1977-05-25") 
+    expect(listItems[1].textContent).toBe("1967-05-25") 
+  });
 });

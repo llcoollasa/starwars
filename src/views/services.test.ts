@@ -3,6 +3,7 @@ import {
   filterMoviesByTitle,
   getMovies,
   getUpdatedMovies,
+  sortBy,
 } from "./Services";
 import {
   APIResponse,
@@ -13,7 +14,6 @@ jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe("getMovies", () => {
-
   it("should returns the movies response from the API", async () => {
     mockedAxios.get.mockResolvedValue({
       data: APIResponse,
@@ -59,5 +59,57 @@ describe("filterMoviesByTitle", () => {
     );
 
     expect(result).toEqual([mockMoviesDataWithUpdatedTitle[1]]);
+  });
+});
+
+describe("sortBy", () => {
+  it("should sort movies by episode in ascending order", async () => {
+    mockedAxios.get.mockResolvedValue({
+      data: APIResponse,
+    });
+
+    const moivies = [...mockMoviesDataWithUpdatedTitle];
+
+    const result = sortBy(moivies, "EPISODE", "ASCENDING");
+
+    expect(result).toEqual(mockMoviesDataWithUpdatedTitle);
+  });
+
+  it("should sort movies by episode in descending order", async () => {
+    mockedAxios.get.mockResolvedValue({
+      data: APIResponse,
+    });
+    const movies = [...mockMoviesDataWithUpdatedTitle];
+    const result = sortBy(movies, "EPISODE", "DESCENDING");
+
+    expect(result).toEqual([
+      mockMoviesDataWithUpdatedTitle[1],
+      mockMoviesDataWithUpdatedTitle[0],
+    ]);
+  });
+
+  it("should sort movies by year in ascending order", async () => {
+    mockedAxios.get.mockResolvedValue({
+      data: APIResponse,
+    });
+
+    const movies = [...mockMoviesDataWithUpdatedTitle];
+
+    const result = sortBy(movies, "YEAR", "ASCENDING");
+
+    expect(result).toEqual([
+      mockMoviesDataWithUpdatedTitle[1],
+      mockMoviesDataWithUpdatedTitle[0],
+    ]);
+  });
+
+  it("should sort movies by year in descending order", async () => {
+    mockedAxios.get.mockResolvedValue({
+      data: APIResponse,
+    });
+    const movies = [...mockMoviesDataWithUpdatedTitle];
+    const result = sortBy(movies, "YEAR", "DESCENDING");
+
+    expect(result).toEqual(mockMoviesDataWithUpdatedTitle);
   });
 });

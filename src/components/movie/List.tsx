@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMovieViewContext } from "../../context/MovieViewContext";
 import Loading from "../shared/Loading";
+import Sorting from "./Sorting"; 
 
 export interface Movie {
   episode_id: number;
@@ -43,6 +44,7 @@ const Collection: React.FC<CollectionProps> = ({ movies, isLoading }) => {
 
   return (
     <div>
+      <Sorting/> 
       <table className="table-auto w-full text-gray-600">
         <tbody>
           {movies.map((movie) => (
@@ -58,9 +60,9 @@ const Collection: React.FC<CollectionProps> = ({ movies, isLoading }) => {
                 handleItemClick(movie.episode_id);
               }}
             >
-              <td className="py-2 text-sm">{`EPISODE ${movie.episode_id}`}</td>
+              <td className="py-2 text-sm" data-testid={`list-item-episode-${movie.episode_id}`}>{`EPISODE ${movie.episode_id}`}</td>
               <td className="py-2 font-semibold">{movie.title}</td>
-              <td className="py-2 text-right pr-2">{movie.release_date}</td>
+              <td className="py-2 text-right pr-2" data-testid={`list-item-release-date-${movie.episode_id}`}>{movie.release_date}</td>
             </tr>
           ))}
         </tbody>
