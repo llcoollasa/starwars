@@ -1,6 +1,7 @@
 import React from "react";
 import MovieView from "./MovieView";
 import {
+  APIPosterResponse,
   APIResponse,
   mockMoviesDataWithUpdatedTitle,
 } from "../helpers/mockData";
@@ -18,6 +19,7 @@ const queryClient = new QueryClient();
 describe("Movie View", () => {
   beforeEach(() => {
     mockedAxios.get.mockResolvedValueOnce({ data: APIResponse });
+    mockedAxios.get.mockResolvedValueOnce({ data: APIPosterResponse });
   });
 
   afterEach(() => {
@@ -71,6 +73,18 @@ describe("Movie View", () => {
     expect((await screen.findByTestId("movie-director")).textContent).toBe(
       `Directed by: ${mockMoviesDataWithUpdatedTitle[1].director}`
     );
+
+    await waitFor(() => {
+      selectedItem = screen.getAllByTestId("movie-poster");
+      expect(selectedItem.length).toBe(1);
+    });
+
+    const imgElement = screen.getByAltText(
+      mockMoviesDataWithUpdatedTitle[1].title
+    );
+    const srcAttribute = imgElement.getAttribute("src");
+    expect(srcAttribute).toBe(APIPosterResponse.Poster);
+
   });
 
   it("should filter movies when user changes the search input", async () => {
@@ -118,9 +132,9 @@ describe("Movie View", () => {
     fireEvent.click(descendingRadio);
 
     const listItems = screen.getAllByTestId(/list-item-episode-/i);
-    expect(listItems.length).toBe(2) 
-    expect(listItems[0].textContent).toBe("EPISODE 2") 
-    expect(listItems[1].textContent).toBe("EPISODE 1") 
+    expect(listItems.length).toBe(2);
+    expect(listItems[0].textContent).toBe("EPISODE 2");
+    expect(listItems[1].textContent).toBe("EPISODE 1");
   });
 
   it("should sort movies by year descending order", async () => {
@@ -145,10 +159,10 @@ describe("Movie View", () => {
     expect(
       await screen.findByText(/Episode II - Mock Movie 2/i)
     ).toBeInTheDocument();
-    
+
     const listItems = screen.getAllByTestId(/list-item-release-date/i);
-    expect(listItems.length).toBe(2) 
-    expect(listItems[0].textContent).toBe("1977-05-25") 
-    expect(listItems[1].textContent).toBe("1967-05-25") 
+    expect(listItems.length).toBe(2);
+    expect(listItems[0].textContent).toBe("1977-05-25");
+    expect(listItems[1].textContent).toBe("1967-05-25");
   });
 });
