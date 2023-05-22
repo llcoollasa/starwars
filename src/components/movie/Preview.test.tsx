@@ -2,6 +2,8 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import MoviePreview from "./Preview";
 import { useMovieViewContext } from "../../context/MovieViewContext";
+import { QueryClient } from "@tanstack/query-core";
+import { QueryClientProvider } from "@tanstack/react-query";
 
 jest.mock("../../context/MovieViewContext", () => ({
   useMovieViewContext: jest.fn(),
@@ -21,6 +23,7 @@ describe("Movie Preview", () => {
   });
 
   it("should render movie details when a movie is selected", () => {
+    const queryClient = new QueryClient();
     const movie = {
       title: "Movie Title",
       episode_id: 1,
@@ -32,7 +35,13 @@ describe("Movie Preview", () => {
       movie: movie,
     });
 
-    render(<MoviePreview />);
+    // render(<MoviePreview />);
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MoviePreview />
+      </QueryClientProvider>
+    );
     const titleElement = screen.getByTestId("movie-title");
     const openingCrawlElement = screen.getByTestId("movie-opening-crawl");
     const directorElement = screen.getByTestId("movie-director");

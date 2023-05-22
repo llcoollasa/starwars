@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useMovieViewContext } from "../../context/MovieViewContext";
 import Loading from "../shared/Loading";
-import Sorting from "./Sorting"; 
 
 export interface Movie {
   episode_id: number;
@@ -40,33 +39,42 @@ const Collection: React.FC<CollectionProps> = ({ movies, isLoading }) => {
 
   if (isLoading) return <Loading />;
 
-  if (!movies.length) return <div>No Data!</div>;
+  if (!movies.length) return <div className="text-center pt-3">No Data!</div>;
 
   return (
     <div>
-      <Sorting/> 
-      <table className="table-auto w-full text-gray-600">
-        <tbody>
-          {movies.map((movie) => (
-            <tr
-              data-testid={`list-item-${movie.episode_id}`}
-              key={movie.episode_id.toString()}
-              className={`border-b cursor-pointer ${
-                selectedMovieId === movie.episode_id
-                  ? "bg-gray-100"
-                  : "hover:bg-gray-100"
-              }`}
-              onClick={() => {
-                handleItemClick(movie.episode_id);
-              }}
-            >
-              <td className="py-2 text-sm" data-testid={`list-item-episode-${movie.episode_id}`}>{`EPISODE ${movie.episode_id}`}</td>
-              <td className="py-2 font-semibold">{movie.title}</td>
-              <td className="py-2 text-right pr-2" data-testid={`list-item-release-date-${movie.episode_id}`}>{movie.release_date}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="p-2">
+        <table className="w-full text-gray-600 ">
+          <tbody>
+            {movies.map((movie) => (
+              <tr
+                data-testid={`list-item-${movie.episode_id}`}
+                key={movie.episode_id.toString()}
+                className={`border-b cursor-pointer ${
+                  selectedMovieId === movie.episode_id
+                    ? "bg-gray-100"
+                    : "hover:bg-gray-100"
+                }`}
+                onClick={() => {
+                  handleItemClick(movie.episode_id);
+                }}
+              >
+                <td
+                  className="py-2 text-sm"
+                  data-testid={`list-item-episode-${movie.episode_id}`}
+                >{`EPISODE ${movie.episode_id}`}</td>
+                <td className="py-2 font-semibold">{movie.title}</td>
+                <td
+                  className="py-2 text-right pr-2"
+                  data-testid={`list-item-release-date-${movie.episode_id}`}
+                >
+                  {movie.release_date}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

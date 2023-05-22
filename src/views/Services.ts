@@ -4,6 +4,7 @@ import { getMovieTitle } from "../components/movie/helper";
 import { SortOrder } from "../components/movie/Sorting";
 
 const API_URL = process.env.REACT_APP_STAR_WARS_API as string;
+const POSTER_API_URL = process.env.REACT_APP_POSTER_API_URL as string;
 
 export interface MoviesResult {
   count: number;
@@ -11,6 +12,16 @@ export interface MoviesResult {
   previous: null;
   results: Movie[];
 }
+
+export interface PosterResult {
+  Poster: string;
+}
+
+export const getMoviePoster = async (title: string): Promise<PosterResult> => {
+  const response = await axios.get(`${POSTER_API_URL}${title}`);
+
+  return response.data;
+};
 
 export const getMovies = async (): Promise<MoviesResult> => {
   const response = await axios.get(API_URL);

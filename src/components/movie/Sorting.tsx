@@ -29,20 +29,20 @@ const Sorting: React.FC = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex bg-gray-200 pt-1 pb-3 pl-2 shadow-sm">
       <select
         value={selectedOption}
         onChange={handleOptionChange}
-        className="w-40 rounded border-gray-300 border focus:outline-none text-sm"
+        className="py-1 w-40 rounded border-gray-300 border focus:outline-none text-sm"
       >
-        <option value="EMPTY">Sort By</option>
+        <option value="EMPTY" className="p-3">Sort By</option>
         <option value="EPISODE">Episode</option>
         <option value="YEAR">Year</option>
       </select>
 
       {showOptions && (
-        <div className="mt-2">
-          <label className="mr-4">
+        <div className="flex items-center">
+          <label className="mx-2">
             <input
               id="asc"
               type="radio"
@@ -70,7 +70,7 @@ const Sorting: React.FC = () => {
       {showOptions && (
         <button
           onClick={handleClear}
-          className="mt-2 text-sm text-blue-500 hover:underline focus:outline-none"
+          className="pl-3 text-sm text-blue-500 hover:underline"
         >
           Clear
         </button>

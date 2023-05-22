@@ -1,11 +1,13 @@
 import axios from "axios";
 import {
   filterMoviesByTitle,
+  getMoviePoster,
   getMovies,
   getUpdatedMovies,
   sortBy,
 } from "./Services";
 import {
+  APIPosterResponse,
   APIResponse,
   mockMoviesDataWithUpdatedTitle,
 } from "../helpers/mockData";
@@ -22,6 +24,18 @@ describe("getMovies", () => {
     const result = await getMovies();
 
     expect(result).toEqual(APIResponse);
+  });
+});
+
+describe("getMoviePoster", () => {
+  it("should returns the movies poster from the API", async () => {
+    mockedAxios.get.mockResolvedValue({
+      data: APIPosterResponse,
+    });
+
+    const result = await getMoviePoster("title");
+
+    expect(result).toEqual(APIPosterResponse);
   });
 });
 

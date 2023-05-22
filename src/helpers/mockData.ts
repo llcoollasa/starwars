@@ -38,3 +38,7 @@ export const APIResponse = {
   previous: null,
   results: mockMoviesData,
 };
+
+export const APIPosterResponse = {
+  Poster: "https://somewhere.com/poster.jpg"
+};
